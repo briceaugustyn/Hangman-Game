@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript Content!</title>
+  
+  <script
+  src="http://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+  <h1>Drink Selection!</h1>
+  <hr>
+  <!-- Here we create a generic drink-options div -->
+  <div id="drink-options"></div>
+
+      <div id="empty-div"></div>
+
+      <h3 id="click-me">Submit</h3>
+
+  <script type="text/javascript">
+    // Array holds all of the drinks available
+    var drinkList = [
+      "Coffee: $5",
+      "Espresso: $7",
+      "Cappuccino: $6",
+      "Latte: $4",
+      "Tea: $3",
+      "Ice Coffee: $6",
+      "Ice Espresso: $8",
+      "Ice Latte: $6",
+      "Ice Tea: $4"
+    ];
+    // 1. Create code that "grabs" the div with the matching id (#drink-options);
+
+    var elemtn= document.getElementById("drink-options");
+
+    // elemtn.innerHTML="Tacos are amazing"
+    
+    // var newDiv=document.createElement("div");
+   
+    // var newDiv.innerHTML=drinklist[1]
+   
+    // ...
+    // 2. Create a for loop that creates HTML content of all the drinks using JavaScript.
+    // HINT: You will need to use each of the following methods: createElement, innerHTML, appendChild
+    
+    for (var index = 0; index < drinkList.length; index++) {
+        //var newDiv=document.createElement("div");
+        var newDiv =$("<div>")
+        //newDiv.innerHTML=drinkList[index]
+        newDiv.html(drinkList[index])
+        //elemtn.appendChild(newDiv)
+        $("#drink-options").append(newDiv)
+    }
+    
+
+$("#empty-div").html ("tacos are amazing maybe")
+var newDiv =$("<div>")
+newDiv.html("with beer is better")
+newDiv.attr("class" ,"jumbotron")
+$("#empty-div").append(newDiv)
+
+
+$(document).ready(function(){
+    $("#click-me").on("click", function (){
+        alert("I've been clicked!")
+    })
+})
+
+
+
+    // ...
+    // ...
+  </script>
+</body>
+</html>
