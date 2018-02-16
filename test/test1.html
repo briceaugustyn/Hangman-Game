@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <p id="demo"></p>
+<script>
+alert ("hello brice")
+ 
+
+var key="l"
+var cars = ["Saab", "Volvo", "BMW"];
+ 
+var array=[]
+var string ="Luke Skywalker"
+ 
+function String_to_Array (String){
+    var array=string.split("");           //Converting a String to an Array
+var text
+for (i = 0; i < array.length; i++) {
+    text += array[i] + "<br>"
+}
+//alert (text)
+//document.getElementById("demo").innerHTML = text;
+return array     
+}
+
+document.getElementById("demo").innerHTML =String_to_Array(string)
+</script>
+ 
+</body>
+</html>

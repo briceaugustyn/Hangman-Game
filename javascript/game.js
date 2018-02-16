@@ -21,12 +21,7 @@ var losses = 0
 var star_wars = {
     name: ["Luke Skywalker","Dark Vader","Ian Solo",],
     
-    
-    
 }
-
-
-
 
 //--3 Find randomely the name to be discovered (cannot be the one allready used previsously)--
 
@@ -35,7 +30,7 @@ function shuffle (array) {
     var i=0
     var j=0
     var temp =null
-    alert("array")
+    //alert("array")
     for (i = array.length -1 ; i > 0; i-=i) {
         j=Math.floor(Math.random() * (i +1))
         temp = array [i]
@@ -43,11 +38,13 @@ function shuffle (array) {
         array[j]=temp
         //alert(array[0]+"random")
     }
-        
+        return array
 }
     
 
 //--4 Display the _ _ _ _ _ _ _ based on the name to be guess--
+
+
 
 
 //--5 Key event to listen to the letters that player is typing--
@@ -56,18 +53,17 @@ document.onkeyup = function(event) {
     // if first time playing init the number of round shuffle the list of name for star wars
     if (init==0){
         //alert("init")
-        var T=star_wars.name
-        shuffle(T)
+        var T=shuffle(star_wars.name)
         round=prompt("how many round do you want to play ?")
         display_round(round)
         display_init("Game started")
-        shuffle(T)
         init=1
     }
     var k = event.key;
     letter_allready_guessed=k
-    check(k,0);
 
+    var name_string = star_wars.name[0]
+    check(k,0,name_string);
     if (round==0){
         alert("game over")
         init=0
@@ -83,20 +79,31 @@ String.prototype.replaceAt=function(index, replacement) {
     return this.substr(0, index) + replacement+ this.substr(index + replacement.length);
 }
 
-function check (key,index){
-    console.log("check 1")
-    var name_string = star_wars.name[index]
-    name_string=name_string.toLowerCase()
-    // var name_string ="hello luke";
-    console.log(name_string)
+// function to reveal all the key guessed (sending a string and a key)
+function revealed (key, string){
+    var array=string.split("");           //Converting a String to an Array
+for (i = 0; i < array.length; i++) {
+    if (star_wars.name==key) array[i]=key
+}
+return array.toString()
+}
+
+function check (key,index,string){
+   
+    name_string=string.toLowerCase()
     // if the letter is part of the string
     if (name_string.includes(key)){ 
         letter_allready_guessed++
         //return position of key in string name
         var n = name_string.indexOf(key);
         name_string=name_string.replaceAt(n, "-")
+        name_string=revealed(key,name_string)
+       // alert(name_string)
+       
+        alert (revealed(key, name_string))
+       
         revealed_name=revealed_name.replaceAt(n, key)
-        alert(name_string + " result " + (n+1)); 
+        //alert(name_string + " result " + (n+1)); 
         display (revealed_name)
         }
         else {
