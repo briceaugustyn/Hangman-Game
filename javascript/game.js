@@ -1,5 +1,3 @@
-var a=1
-console.log(a)
 
 
 // 1 Define global variable
@@ -42,76 +40,119 @@ function shuffle (array) {
 }
     
 
-//--4 Display the _ _ _ _ _ _ _ based on the name to be guess--
+// function for Even number
+function isEven(num) {
+    if (num % 2 === 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+//--4 Display the _ _ _ _ _ _ _ based on the name to be guess and add spaces
+function Hide_letter(string) {
+    console.log( "Hide ")
+        var array=string.split("");          //Converting a String to an Array
+        var array_buffer = []
+        for (i = 0; i < array.length*2; i++) {
+            
+            if (isEven(i)==true) {
+                array_buffer[i]="-"}
+                else {
+                    array_buffer[i]=" "}
+                }
+                var result =array_buffer.join("") //Converting an Array to a String
+            console.log("Hide function result is "+revealed_name)
+            return revealed_name
+}
+
+//--4 Revealed the letters and return a string revealed
+function revealed(name_string,revealed_name,key) {
+    console.log("revealed")
+    
+    console.log(name_string)
+    console.log(revealed_name)
+    console.log(key)
+    
+    var array1=revealed_name.split("");          //Converting a String to an Array
+    var array2=name_string.split("");          //Converting a String to an Array
+    
+    var array_buffer = []
+    for (i = 0; i < array1.length*2; i++) {
+if (array2[i]==key){
+    if (array1!=="-"){array1[i*2]=key}
+}
+    }
+        revealed_name =array1.join("") //Converting an Array to a String
+        console.log("Revealed function result is "+ revealed_name)
+        return revealed_name
+}
+
+
+
+
+function Init() {
+    var T=star_wars.name
+    shuffle(T)
+    round=prompt("how many round do you want to play ?")
+    update_round (round)
+    display_init("Game started")
+    display (Hide_letter(T[0]))
+}
+
+String.prototype.replaceAt=function(index, replacement) {
+    return this.substr(0, index) + replacement+ this.substr(index + replacement.length);
+}
 
 
 
 
 //--5 Key event to listen to the letters that player is typing--
 
+
+
 document.onkeyup = function(event) {
-    // if first time playing init the number of round shuffle the list of name for star wars
-    if (init==0){
-        //alert("init")
-        var T=shuffle(star_wars.name)
-        round=prompt("how many round do you want to play ?")
-        display_round(round)
-        display_init("Game started")
-        init=1
+    
+     // if first time playing init the number of round shuffle the list of name for star wars
+     if (init==0){
+        Init()
     }
-    var k = event.key;
-    letter_allready_guessed=k
-
-    var name_string = star_wars.name[0]
-    check(k,0,name_string);
-    if (round==0){
-        alert("game over")
-        init=0
+    else{
+        var k = event.key;
+        check(k,0);
+    
+        if (round==0){
+            alert("game over")
+            init=0
+            losses++
+            Update_Losses(losses)
+        }
     }
-    //alert(T[0]+"hello")
-    //eval(kkeys[k]);
-  };
-
-// 6 Functions 
-// Function to verify if key typed is part of name to be guessed
-
-String.prototype.replaceAt=function(index, replacement) {
-    return this.substr(0, index) + replacement+ this.substr(index + replacement.length);
+    init=1
 }
 
-// function to reveal all the key guessed (sending a string and a key)
-function revealed (key, string){
-    var array=string.split("");           //Converting a String to an Array
-for (i = 0; i < array.length; i++) {
-    if (star_wars.name==key) array[i]=key
-}
-return array.toString()
-}
-
-function check (key,index,string){
+function check (key,index){
    
-    name_string=string.toLowerCase()
+
+    console.log("check 1")
+    var name_string = star_wars.name[index]
+    name_string=name_string.toLowerCase()
+    // var name_string ="hello luke";
+    console.log(name_string)
     // if the letter is part of the string
     if (name_string.includes(key)){ 
-        letter_allready_guessed++
-        //return position of key in string name
-        var n = name_string.indexOf(key);
-        name_string=name_string.replaceAt(n, "-")
-        name_string=revealed(key,name_string)
-       // alert(name_string)
-       
-        alert (revealed(key, name_string))
-       
-        revealed_name=revealed_name.replaceAt(n, key)
-        //alert(name_string + " result " + (n+1)); 
+        //letter_allready_guessed++
+        revealed_name=revealed(name_string,revealed_name,key)
         display (revealed_name)
+        console.log(revealed_name+" 2 ")
         }
         else {
             wrong_guess++
+            console.log("wrong guess")
             round--
-            display2(wrong_guess)
-            display_round(round)
-            alert("wrong"+ wrong_guess)
+            Update_wrong_guess (wrong_guess)
+            update_round (round)
         }    
 }
 
@@ -120,30 +161,24 @@ function check (key,index,string){
 //--7 As the user guesses the correct letters, reveal them: m a d o _  _ a.--
 function display (revealed_name){
 document.getElementById("word-blanks").innerHTML = revealed_name;
-//alert("dispay1")
 }
+
 //--8 Display number-of-guess-remaining, letter-allready-guessed, leter-guessed, win, losses--
-function display2 (wrong_guess){
-//alert("display2"+wrong_guess)
 
+function Update_wrong_guess (wrong_guess){
 document.getElementById("wrong-guesses").innerHTML = wrong_guess;
+}
 
-// document.getElementById("number_of_guess_remaining").innerHTML = number_of_guess_remaining;
-// document.getElementById("letter_allready_guessed").innerHTML = letter_allready_guessed;
-// document.getElementById("leter_guessed").innerHTML = leter_guessed;
-// document.getElementById("win-counter").innerHTML = win;
-// document.getElementById("losses").innerHTML = losses;
-    }
+function display_init (init){
+document.getElementById("game-started").innerHTML = init;
+}
 
-    function display_init (init){
-        
-        document.getElementById("game-started").innerHTML = init;
-        
-            }
+function update_round (round){
+document.getElementById("guesses-left").innerHTML = round;
+}
 
-    function display_round (round){
-        
-        document.getElementById("guesses-left").innerHTML = round;
-        //document.getElementById("number_of_guess_remaining").innerHTML = round2;
-        
-            }
+
+function Update_Losses(losses){
+    document.getElementById("loss-counter").innerHTML = losses;
+}
+
